@@ -41,3 +41,15 @@ module.exports.getRandomTour = function (callback) {
       callback(error, null);
     });
 };
+
+module.exports.createTour = function (data, callback) {
+  // TODO: Implement sequelize query for POST
+};
+
+module.exports.deleteTour = function (id, callback) {
+  // TODO: Implement sequelize query for DELETE
+};
+
+module.exports.updateTour = function (id, callback) {
+  // TODO: Implement sequelize query for PUT
+};
