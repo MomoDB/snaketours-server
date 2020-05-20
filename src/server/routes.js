@@ -44,4 +44,17 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', '..', 'index.html'));
 });
 
+app.post('/tour/create', (req, res) => {
+
+});
+
+app.delete('/tour/:id', (req, res) => {
+
+});
+
+app.put('/tour/:id', (req, res) => {
+
+});
+
+
 module.exports = app;
