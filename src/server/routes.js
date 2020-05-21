@@ -44,4 +44,37 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', '..', 'index.html'));
 });
 
+app.post('/tour/', (req, res) => {
+  //TODO: Call controller function for posting tour
+});
+
+app.post('/attraction/', (req, res) => {
+  //TODO: Call controller function for posting attraction
+});
+
+app.post('/tour/:tourId/attraction/:attractionId', (req, res) => {
+  //TODO: Call controller function for posting posting attraction to tour association
+});
+
+app.delete('/tour/:id', (req, res) => {
+  //TODO: Call controller function for deleting tour
+});
+
+app.delete('/attraction/:id', (req, res) => {
+  //TODO: Call controller function for deleting attraction
+});
+
+app.post('/tour/:tourId/attraction/:attractionId', (req, res) => {
+  //TODO: Call controller function for posting posting attraction to tour association
+});
+
+app.put('/tour/:id', (req, res) => {
+  //TODO: Call controller function for updating tour
+});
+
+app.put('/attraction/:id', (req, res) => {
+  //TODO: Call controller function for updating attraction
+});
+
+
 module.exports = app;
