@@ -6,19 +6,19 @@ USE snaketours;
 
 CREATE TABLE Tour (
   tour_id INT NOT NULL AUTO_INCREMENT,
-  tour VARCHAR(255),
-  overview VARCHAR(255),
-  cancellation_policy VARCHAR(255),
-  return_details VARCHAR(255)
+  tour VARCHAR(100),
+  overview TEXT,
+  cancellation_policy TEXT,
+  return_details TEXT,
   PRIMARY KEY(tour_id)
 );
 
 CREATE TABLE Attraction (
   attraction_id INT NOT NULL AUTO_INCREMENT,
-  attraction VARCHAR(255),
+  attraction VARCHAR(100),
   latitude FLOAT,
   longitude FLOAT,
-  description VARCHAR(255),
+  description TEXT,
   rating FLOAT,
   url VARCHAR(255),
   image_path VARCHAR(255),
