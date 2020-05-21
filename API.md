@@ -17,8 +17,6 @@
       "overview": "String",
       "cancellation_policy": "String",
       "return_details": "String",
-      "createdAt": "YYYY-MM-DDThh:mm:ss.sTZD",
-      "updatedAt": "YYYY-MM-DDThh:mm:ss.sTZD",
       "Attractions": [
         {
             "id": "id Number",
@@ -30,11 +28,7 @@
             "attraction_url": "String",
             "image_path": "Image URL",
             "image_alt": "String",
-            "createdAt": "YYYY-MM-DDThh:mm:ss.sTZD",
-            "updatedAt": "YYYY-MM-DDThh:mm:ss.sTZD",
             "ToursAttractions": {
-                "createdAt": "YYYY-MM-DDThh:mm:ss.sTZD",
-                "updatedAt": "YYYY-MM-DDThh:mm:ss.sTZD",
                 "AttractionId": "Id Number",
                 "TourId": "Id Number"
             }
