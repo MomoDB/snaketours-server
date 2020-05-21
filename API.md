@@ -33,6 +33,7 @@
                 "TourId": "Id Number"
             }
         },
+      ]
     }
 ```
 
