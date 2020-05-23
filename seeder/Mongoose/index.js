@@ -15,9 +15,15 @@ const TourSchema = new Schema({
   return_details: String,
   startpoint_name: String,
   startpoint_street: String,
+  startpoint_city: String,
+  startpoint_state: String,
+  startpoint_zip: Number,
   startpoint_details: String,
   endpoint_name: String,
   endpoint_street: String,
+  endpoint_city: String,
+  endpoint_state: String,
+  endpoint_zip: Number,
   endpoint_details: String,
   stops: [
     {
