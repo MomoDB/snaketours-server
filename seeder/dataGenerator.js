@@ -1,3 +1,8 @@
+const faker = require('faker');
+const { address, lorem } = faker;
+
+const tourFileName = 'tours.csv';
+
 const tourHeaders = [
   { id: 'tour_name', title: 'tour_name' },
   { id: 'overview', title: 'overview' },
@@ -19,27 +24,50 @@ const tourHeaders = [
 
 const tours = [
   {
-    tour_name: 'alksfjlkd',
-    overview: 'sadklfjasdkljflakds',
-    cancellation_policy: 'asdjflksadjfkl',
-    return_details: 'dlkajfkldjsafklajds',
-    startpoint_name: 'flkajsdlfkj',
-    startpoint_street: 'alksdjklasdjfkldddsd',
-    startpoint_city: 'alksdjklasdjfkldddsd',
-    startpoint_state: 'alksdjklasdjfkldddsd',
-    startpoint_zip: 94117,
-    startpoint_details: 'alksdjklasdjfkldddsd',
-    endpoint_name: 'alksdjklasdjfkldddsd',
-    endpoint_street: 'alksdjklasdjfkldddsd',
-    endpoint_city: 'alksdjklasdjfkldddsd',
-    endpoint_state: 'alksdjklasdjfkldddsd',
-    endpoint_zip: 94117,
-    endpoint_details: 'asdlkfjsadklfjdslkafjkd',
-
+    tour_name: `Tour around ${address.city()}`,
+    overview: lorem.paragraph(),
+    cancellation_policy: lorem.paragraph(),
+    return_details: lorem.paragraph(),
+    startpoint_name: lorem.words(),
+    startpoint_street: address.streetAddress(),
+    startpoint_city: address.city(),
+    startpoint_state: address.stateAbbr(),
+    startpoint_zip: address.zipCode(),
+    startpoint_details: lorem.sentences(),
+    endpoint_name: lorem.words(),
+    endpoint_street: address.streetAddress(),
+    endpoint_city: address.city(),
+    endpoint_state: address.stateAbbr(),
+    endpoint_zip: address.zipCode(),
+    endpoint_details: lorem.sentences(),
   },
 ];
 
-const tourFileName = 'tours.csv';
+// const createTours = () => {
+//   for (let i = 0; i < 100; i += 1) {
+//     const tour = {
+//       tour_name: `Tour around ${address.city}`,
+//       overview: 'sadklfjasdkljflakds',
+//       cancellation_policy: 'asdjflksadjfkl',
+//       return_details: 'dlkajfkldjsafklajds',
+//       startpoint_name: 'flkajsdlfkj',
+//       startpoint_street: 'alksdjklasdjfkldddsd',
+//       startpoint_city: 'alksdjklasdjfkldddsd',
+//       startpoint_state: 'alksdjklasdjfkldddsd',
+//       startpoint_zip: 94117,
+//       startpoint_details: 'alksdjklasdjfkldddsd',
+//       endpoint_name: 'alksdjklasdjfkldddsd',
+//       endpoint_street: 'alksdjklasdjfkldddsd',
+//       endpoint_city: 'alksdjklasdjfkldddsd',
+//       endpoint_state: 'alksdjklasdjfkldddsd',
+//       endpoint_zip: 94117,
+//       endpoint_details: 'asdlkfjsadklfjdslkafjkd',
+
+//     },
+//   };
+
+// };
+
 
 module.exports = {
   tourHeaders,

@@ -15,15 +15,16 @@ CREATE TABLE Tour (
   startpoint_city VARCHAR(50),
   startpoint_state VARCHAR(2),
   startpoint_zip VARCHAR(5),
+  startpoint_country VARCHAR(50),
   startpoint_details VARCHAR(500),
   endpoint_name VARCHAR(100),
   endpoint_street VARCHAR(255),
   endpoint_city VARCHAR(50),
   endpoint_state VARCHAR(2),
   endpoint_zip VARCHAR(5),
+  endpoint_country VARCHAR(50),
   endpoint_details VARCHAR(500),
   PRIMARY KEY(tour_id),
-
 );
 
 CREATE TABLE Attraction (
@@ -46,7 +47,7 @@ CREATE TABLE Stops (
   position SMALLINT NOT NULL,
   duration SMALLINT,
   admission_details VARCHAR(15),
-  stop_description VARCHAR(255),
+  stop_description VARCHAR(500),
   PRIMARY KEY(stop_id)
 )
 

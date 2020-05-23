@@ -9,7 +9,7 @@ const { Schema } = mongoose;
 
 const TourSchema = new Schema({
   _id: Schema.Types.ObjectId,
-  name: String,
+  tour_name: String,
   overview: String,
   cancellation_policy: String,
   return_details: String,
@@ -18,12 +18,14 @@ const TourSchema = new Schema({
   startpoint_city: String,
   startpoint_state: String,
   startpoint_zip: Number,
+  startpoint_country: String,
   startpoint_details: String,
   endpoint_name: String,
   endpoint_street: String,
   endpoint_city: String,
   endpoint_state: String,
   endpoint_zip: Number,
+  endpoint_country: String,
   endpoint_details: String,
   stops: [
     {
