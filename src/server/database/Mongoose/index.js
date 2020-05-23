@@ -13,28 +13,31 @@ const TourSchema = new Schema({
   overview: String,
   cancellation_policy: String,
   return_details: String,
-  attractions: [
+  startpoint_name: String,
+  startpoint_street: String,
+  startpoint_details: String,
+  endpoint_name: String,
+  endpoint_street: String,
+  endpoint_details: String,
+  stops: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Attraction',
+      ref: 'Stop',
     },
   ],
 });
 
-const AttractionSchema = new Schema({
+const StopSchema = new Schema({
   _id: Schema.Types.ObjectId,
-  name: String,
+  position: Number,
+  duration: Number,
+  admission_details: String,
+  description: String,
+  attraction_name: String,
   latitude: Schema.Types.Decimal128,
   longitude: Schema.Types.Decimal128,
-  description: String,
-  rating: Schema.Types.Decimal128,
+  attraction_rating: Schema.Types.Decimal128,
   url: String,
   image_path: String,
   image_alt: String,
-  tours: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Tour',
-    },
-  ],
 });

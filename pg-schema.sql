@@ -4,20 +4,20 @@ CREATE DATABASE snaketours;
 
 USE snaketours;
 
--- CREATE TABLE Business (
---   business_id INT NOT NULL AUTO_INCREMENT,
---   business_name VARCHAR(50),
---   PRIMARY KEY(business_id)
--- )
-
 CREATE TABLE Tour (
   tour_id INT NOT NULL AUTO_INCREMENT,
   tour_name VARCHAR(100),
-  overview TEXT,
-  cancellation_policy TEXT,
-  return_details TEXT,
+  overview VARCHAR(255),
+  cancellation_policy VARCHAR(255),
+  return_details VARCHAR(255),
+  startpoint_name VARCHAR(100),
+  startpoint_street VARCHAR(100),
+  startpoint_details VARCHAR(255),
+  endpoint_name VARCHAR(100),
+  endpoint_street VARCHAR(100),
+  endpoint_details VARCHAR(255),
   PRIMARY KEY(tour_id),
-  -- business_id REFERENCES Business(business_id) ON UPDATE CASCADE ON DELETE CASCADE
+
 );
 
 CREATE TABLE Attraction (
@@ -25,20 +25,24 @@ CREATE TABLE Attraction (
   attraction_name VARCHAR(100),
   latitude FLOAT,
   longitude FLOAT,
-  description TEXT,
   rating FLOAT,
-  url VARCHAR(255),
+  review_count INT,
+  attraction_url VARCHAR(255),
   image_path VARCHAR(255),
   image_alt VARCHAR(255),
   PRIMARY KEY(attraction_id)
 );
 
-CREATE TABLE TourAttraction (
+CREATE TABLE Stops (
+  stop_id INT NOT NULL AUTO_INCREMENT,
   tour_id INT REFERENCES Tour(tour_id) ON UPDATE CASCADE ON DELETE CASCADE,
-  attraction_id INT REFERENCES Attraction(attraction_id) ON UPDATE CASCADE ON
-  DELETE CASCADE,
-  PRIMARY KEY(tour_id, attraction_id)
-);
+  attraction_id INT REFERENCES Attraction(attraction_id),
+  position SMALLINT NOT NULL,
+  duration SMALLINT,
+  admission_details VARCHAR(15),
+  stop_description VARCHAR(255),
+  PRIMARY KEY(stop_id)
+)
 
-CREATE INDEX tour_id_index ON TourAttraction(tour_id);
-CREATE INDEX attraction_id_index ON TourAttraction(attraction_id);
+ALTER TABLE Stops ALTER CONSTRAINT tour_id DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE Stops ALTER CONSTRAINT attraction DEFERRABLE INITIALLY DEFERRED;

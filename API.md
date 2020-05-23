@@ -1,7 +1,6 @@
 ## Server API
 
 ### Get random tour and get tour by id
-  * GET `/tour/`
   * GET `/tour/:id`
 **Path Parameters:**
   * `id` tour id
@@ -17,22 +16,29 @@
       "overview": "String",
       "cancellation_policy": "String",
       "return_details": "String",
-      "Attractions": [
+      "startpoint_name": "String",
+      "startpoint_street": "String",
+      "startpoint_details": "String",
+      "endpoint_name": "String",
+      "endpoint_street": "String",
+      "endpoint_details": "String",
+      "Stops": [
         {
-            "id": "id Number",
-            "name": "String",
-            "latitude": "Number FLOAT",
-            "longitude": "Number FLOAT",
-            "description": "String",
-            "rating": "Number",
-            "attraction_url": "String",
-            "image_path": "Image URL",
-            "image_alt": "String",
-            "ToursAttractions": {
-                "AttractionId": "Id Number",
-                "TourId": "Id Number"
-            }
+          "stop_id": "id Number",
+          "position": "Number",
+          "duration": "Number",
+          "admission_details": "String",
+          "stop_description": "String",
+          "attraction_name": "String",
+          "latitude": "Number FLOAT",
+          "longitude": "Number FLOAT",
+          "rating": "Number",
+          "review_count": "Number",
+          "attraction_url": "String",
+          "image_path": "Image URL",
+          "image_alt": "String",
         },
+      ]
     }
 ```
 
@@ -49,42 +55,28 @@
       "overview": "String",
       "cancellation_policy": "String",
       "return_details": "String",
-    }
-```
-### Add attraction
-  * POST `/attraction/`
-
-**Success Status Code:** `201`
-
-**Request Body**: Expects JSON with the following keys.
-
-```json
-    {
-      "name": "String",
-      "latitude": "Number FLOAT",
-      "longitude": "Number FLOAT",
-      "description": "String",
-      "rating": "Number FLOAT",
-      "attraction_url": "String",
-      "image_path": "String",
-      "image_alt": "String",
-    }
-```
-
-### Add attraction to tour
-  * POST `/tour/:tourId/attractions/:attractionId`
-
-**Path Parameters:**
-  * `id` tour id
-  * `id` attraction id
-**Success Status Code:** `201`
-
-**Request Body**: Expects JSON with the following keys.
-
-```json
-    {
-      "tour_id": "id Number",
-      "attraction_id": "id Number",
+      "startpoint_name": "String",
+      "startpoint_street": "String",
+      "startpoint_details": "String",
+      "endpoint_name": "String",
+      "endpoint_street": "String",
+      "endpoint_details": "String",
+      "Stops": [
+        {
+          "position": "Number",
+          "duration": "Number",
+          "admission_details": "String",
+          "stop_description": "String",
+          "attraction_name": "String",
+          "latitude": "Number FLOAT",
+          "longitude": "Number FLOAT",
+          "rating": "Number",
+          "review_count": "Number",
+          "attraction_url": "String",
+          "image_path": "Image URL",
+          "image_alt": "String",
+        },
+      ]
     }
 ```
 
@@ -104,29 +96,35 @@
       "overview": "String",
       "cancellation_policy": "String",
       "return_details": "String",
+      "startpoint_name": "String",
+      "startpoint_street": "String",
+      "startpoint_details": "String",
+      "endpoint_name": "String",
+      "endpoint_street": "String",
+      "endpoint_details": "String",
     }
 ```
 
-### Update attraction info
-  * PATCH `/attraction/:id`
+### Update stop info
+  * PATCH `/tour/:tourId/stop/:stopId`
 
 **Path Parameters:**
-  * `id` attraction id
-
+  * `tourId` tour id
+  * `stopId` stop id
 **Success Status Code:** `204`
 
 **Request Body**: Expects JSON with any of the following keys (include only keys to be updated)
 
 ```json
     {
-      "name": "String",
-      "description": "String",
-      "image_path": "Image URL",
-      "image_alt": "String",
+      "position": "Number",
+      "duration": "Number",
+      "admission_details": "String",
+      "stop_description": "String",
     }
 ```
 
-### Delete tour (Note: Would I also need to update join table?)
+### Delete tour
   * DELETE `/tour/:id`
 
 **Path Parameters:**
@@ -134,20 +132,10 @@
 
 **Success Status Code:** `204`
 
-
-### Delete attraction (Note: Would I also need to update join table?)
-  * DELETE `/attraction/:id`
-
-**Path Parameters:**
-  * `id` attraction id
-
-**Success Status Code:** `204`
-
-
-### Delete attraction from tour (Note: Would I also need to update join table?)
-  * DELETE `/tour/:tourId/attractions/:attractionId`
+### Delete attraction from tour
+  * DELETE `/tour/:tourId/stop/:stopId`
 
 **Path Parameters:**
-  * `id` attraction id
-
+  * `tourId` tour id
+  * `stopId` stop id
 **Success Status Code:** `204`
