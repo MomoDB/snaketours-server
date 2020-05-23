@@ -139,3 +139,4 @@
   * `tourId` tour id
   * `stopId` stop id
 **Success Status Code:** `204`
+
