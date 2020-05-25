@@ -6,6 +6,10 @@ const csvWriter = createObjectCsvWriter({
   header: tourHeaders,
 });
 
+console.time('Write time');
 csvWriter
   .writeRecords(tours)
-  .then(() => console.log('The CSV File for was written successfully'));
+  .then(() => {
+    console.log('The CSV File was written successfully');
+    console.timeEnd('Write time');
+  });
