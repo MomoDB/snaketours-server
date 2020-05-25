@@ -1,11 +1,5 @@
-DROP DATABASE IF EXISTS snaketours;
-
-CREATE DATABASE snaketours;
-
-USE snaketours;
-
 CREATE TABLE Tour (
-  tour_id INT NOT NULL AUTO_INCREMENT,
+  tour_id SERIAL PRIMARY KEY,
   tour_name VARCHAR(100),
   overview VARCHAR(500),
   cancellation_policy VARCHAR(500),
@@ -14,21 +8,20 @@ CREATE TABLE Tour (
   startpoint_street VARCHAR(255),
   startpoint_city VARCHAR(50),
   startpoint_state VARCHAR(2),
-  startpoint_zip VARCHAR(5),
-  startpoint_country VARCHAR(50),
+  startpoint_zip VARCHAR(11),
+  startpoint_country VARCHAR(10),
   startpoint_details VARCHAR(500),
   endpoint_name VARCHAR(100),
   endpoint_street VARCHAR(255),
   endpoint_city VARCHAR(50),
   endpoint_state VARCHAR(2),
-  endpoint_zip VARCHAR(5),
-  endpoint_country VARCHAR(50),
-  endpoint_details VARCHAR(500),
-  PRIMARY KEY(tour_id),
+  endpoint_zip VARCHAR(10),
+  endpoint_country VARCHAR(10),
+  endpoint_details VARCHAR(500)
 );
 
 CREATE TABLE Attraction (
-  attraction_id INT NOT NULL AUTO_INCREMENT,
+  attraction_id SERIAL PRIMARY KEY,
   attraction_name VARCHAR(100),
   latitude FLOAT,
   longitude FLOAT,
@@ -36,20 +29,18 @@ CREATE TABLE Attraction (
   review_count INT,
   attraction_url VARCHAR(255),
   image_path VARCHAR(255),
-  image_alt VARCHAR(255),
-  PRIMARY KEY(attraction_id)
+  image_alt VARCHAR(255)
 );
 
 CREATE TABLE Stops (
-  stop_id INT NOT NULL AUTO_INCREMENT,
+  stop_id SERIAL PRIMARY KEY,
   tour_id INT REFERENCES Tour(tour_id) ON UPDATE CASCADE ON DELETE CASCADE,
   attraction_id INT REFERENCES Attraction(attraction_id),
   position SMALLINT NOT NULL,
   duration SMALLINT,
   admission_details VARCHAR(15),
-  stop_description VARCHAR(500),
-  PRIMARY KEY(stop_id)
-)
+  stop_description VARCHAR(500)
+);
 
-ALTER TABLE Stops ALTER CONSTRAINT tour_id DEFERRABLE INITIALLY DEFERRED;
-ALTER TABLE Stops ALTER CONSTRAINT attraction DEFERRABLE INITIALLY DEFERRED;
+-- ALTER TABLE Stops ALTER CONSTRAINT tour_id DEFERRABLE INITIALLY DEFERRED;
+-- ALTER TABLE Stops ALTER CONSTRAINT attraction_id DEFERRABLE INITIALLY DEFERRED;

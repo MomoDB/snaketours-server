@@ -6,7 +6,9 @@
   "scripts": {
     "test": "npx webpack && jest",
     "start": "node src/server/index.js",
-    "writeCSV": "node ./seeder/csvWriter.js"
+    "writeCSV": " node --max-old-space-size=4096 ./seeder/csvWriter.js && node ./seeder/csvWriter.js",
+    "db:build-pg": "bash ./seeder/Postgres/pg.bash",
+    "db:full-build-pg": "npm run writeCSV && npm run db:build-pg"
   },
   "author": "",
   "license": "ISC",
@@ -38,7 +40,9 @@
   "dependencies": {
     "@babel/preset-env": "^7.9.6",
     "axios": "^0.19.2",
+    "csv-write-stream": "^2.0.0",
     "express": "4.17.1",
+    "fast-csv": "^4.2.0",
     "jest-enzyme": "^7.1.2",
     "jest-google-maps-mock": "^1.0.3",
     "mini-css-extract-plugin": "^0.9.0",
