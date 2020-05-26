@@ -5,9 +5,8 @@ dist
 config.js
 snakeadvisoritinerary.pem
 /reports/
+pg_fakeData
 pg.bash
-tours.csv
-attractions.csv
 # ssh -i snakeadvisoritinerary.pem ec2-user@ec2-34-217-207-61.us-west-2.compute.amazonaws.com
 # scp -i snakeadvisoritinerary.pem filename ec2-user@34.217.207.61:~
 # scp -i snakeadvisoritinerary.pem -r foldername ec2-user@34.217.207.61:~

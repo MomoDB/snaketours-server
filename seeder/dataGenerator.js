@@ -29,31 +29,6 @@ const tourHeaders = [
   'endpoint_details',
 ];
 
-const createTour = (index) => {
-  const tour = {
-    tour_id: index,
-    tour_name: `Tour around ${address.city()}`,
-    overview: lorem.paragraph(),
-    cancellation_policy: lorem.paragraph(),
-    return_details: lorem.paragraph(),
-    startpoint_name: lorem.words(),
-    startpoint_street: address.streetAddress(),
-    startpoint_city: address.city(),
-    startpoint_state: address.stateAbbr(),
-    startpoint_zip: address.zipCode('#####'),
-    startpoint_country: 'USA',
-    startpoint_details: lorem.sentences(),
-    endpoint_name: lorem.words(),
-    endpoint_street: address.streetAddress(),
-    endpoint_city: address.city(),
-    endpoint_state: address.stateAbbr(),
-    endpoint_zip: address.zipCode(),
-    endpoint_country: 'USA',
-    endpoint_details: lorem.sentences(),
-  };
-  return tour;
-};
-
 const images = [
   'https://trip-advisor-photo-gallery.s3-us-west-1.amazonaws.com/Itinerary/1024px-Hibernia_Bank%2C_San_Francisco.jpg',
   'https://trip-advisor-photo-gallery.s3-us-west-1.amazonaws.com/Itinerary/13159501074_c13ff7cc0d_b.jpg',
@@ -101,6 +76,42 @@ const attractionHeaders = [
   'image_alt',
 ];
 
+
+const stopHeaders = [
+  'stop_id',
+  'tour_id',
+  'attraction_id',
+  'position',
+  'duration',
+  'admission_details',
+  'stop_description',
+];
+
+const createTour = (index) => {
+  const tour = {
+    tour_id: index,
+    tour_name: `Tour around ${address.city()}`,
+    overview: lorem.paragraph(),
+    cancellation_policy: lorem.paragraph(),
+    return_details: lorem.paragraph(),
+    startpoint_name: lorem.words(),
+    startpoint_street: address.streetAddress(),
+    startpoint_city: address.city(),
+    startpoint_state: address.stateAbbr(),
+    startpoint_zip: address.zipCode('#####'),
+    startpoint_country: 'USA',
+    startpoint_details: lorem.sentences(),
+    endpoint_name: lorem.words(),
+    endpoint_street: address.streetAddress(),
+    endpoint_city: address.city(),
+    endpoint_state: address.stateAbbr(),
+    endpoint_zip: address.zipCode(),
+    endpoint_country: 'USA',
+    endpoint_details: lorem.sentences(),
+  };
+  return tour;
+};
+
 const createAttraction = (index) => {
   const attraction = {
     attraction_id: index,
@@ -114,6 +125,37 @@ const createAttraction = (index) => {
     image_alt: lorem.words(),
   };
   return attraction;
+};
+
+const createStops = async (tourCount, headers, fileName) => {
+  console.time('Write time');
+  const writer = csvWriter({ headers });
+  writer.pipe(fs.createWriteStream(path.join(__dirname, fileName)));
+  let totalStops = 0;
+  for (let i = 1; i <= tourCount; i += 1) {
+    const stopsPerTour = faker.random.number({ min: 1, max: 8 });
+    let stopCount = 1;
+    const randomAttractionId = faker.random.number(10000000 - stopsPerTour);
+    while (stopCount <= stopsPerTour) {
+      totalStops += 1;
+      const stop = {
+        stop_id: totalStops,
+        tour_id: i,
+        attraction_id: randomAttractionId + stopCount,
+        position: stopCount,
+        duration: faker.random.number({ min: 15, max: 180 }),
+        admission_details: `Admission ${totalStops % 2 ? 'included' : 'excluded'}`,
+        stop_description: lorem.paragraph(),
+      };
+      if (!writer.write(stop)) {
+        await new Promise((resolve) => writer.once('drain', resolve));
+      }
+      stopCount += 1;
+    }
+  }
+  writer.end();
+  console.log(`${totalStops} stops created for ${tourCount} tours`);
+  console.timeEnd('Write time');
 };
 
 const createData = async (constructor, headers, max, fileName) => {
@@ -132,29 +174,6 @@ const createData = async (constructor, headers, max, fileName) => {
   console.timeEnd('Write time');
 };
 
-// createData(createTour, tourHeaders, 10000000, 'tours.csv');
+createData(createTour, tourHeaders, 10000000, 'tours.csv');
 createData(createAttraction, attractionHeaders, 10000000, 'attractions.csv');
-
-// const tourFileName = 'tours.csv';
-
-// const tourHeaders = [
-//   { id: 'tour_id', title: 'tour_id' },
-//   { id: 'tour_name', title: 'tour_name' },
-//   { id: 'overview', title: 'overview' },
-//   { id: 'cancellation_policy', title: 'cancellation_policy' },
-//   { id: 'return_details', title: 'return_details' },
-//   { id: 'startpoint_name', title: 'startpoint_name' },
-//   { id: 'startpoint_street', title: 'startpoint_street' },
-//   { id: 'startpoint_city', title: 'startpoint_city' },
-//   { id: 'startpoint_state', title: 'startpoint_state' },
-//   { id: 'startpoint_zip', title: 'startpoint_zip' },
-//   { id: 'startpoint_country', title: 'startpoint_country' },
-//   { id: 'startpoint_details', title: 'startpoint_details' },
-//   { id: 'endpoint_name', title: 'endpoint_name' },
-//   { id: 'endpoint_street', title: 'endpoint_street' },
-//   { id: 'endpoint_city', title: 'endpoint_city' },
-//   { id: 'endpoint_state', title: 'endpoint_state' },
-//   { id: 'endpoint_zip', title: 'endpoint_zip' },
-//   { id: 'endpoint_country', title: 'endpoint_country' },
-//   { id: 'endpoint_details', title: 'endpoint_details' },
-// ];
+createStops(10000000, stopHeaders, 'stops.csv');

@@ -38,9 +38,6 @@ CREATE TABLE Stops (
   attraction_id INT REFERENCES Attraction(attraction_id),
   position SMALLINT NOT NULL,
   duration SMALLINT,
-  admission_details VARCHAR(15),
+  admission_details VARCHAR(25),
   stop_description VARCHAR(500)
 );
-
--- ALTER TABLE Stops ALTER CONSTRAINT tour_id DEFERRABLE INITIALLY DEFERRED;
--- ALTER TABLE Stops ALTER CONSTRAINT attraction_id DEFERRABLE INITIALLY DEFERRED;
