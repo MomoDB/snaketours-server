@@ -5,10 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx webpack && jest",
-    "start": "node src/server/index.js",
-    "writeCSV": " node --max-old-space-size=4096 ./seeder/csvWriter.js && node ./seeder/csvWriter.js",
-    "db:build-pg": "bash ./seeder/Postgres/pg.bash",
-    "db:full-build-pg": "npm run writeCSV && npm run db:build-pg"
+    "start": "node src/server/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -19,7 +16,6 @@
     "babel-jest": "^26.0.0",
     "babel-loader": "8.1.0",
     "chai": "^4.2.0",
-    "csv-writer": "^1.6.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^6.8.0",
@@ -28,7 +24,6 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.1",
-    "faker": "^4.1.0",
     "file-loader": "^6.0.0",
     "jest": "^25.5.4",
     "jest-transform-stub": "^2.0.0",
@@ -42,7 +37,7 @@
     "axios": "^0.19.2",
     "csv-write-stream": "^2.0.0",
     "express": "4.17.1",
-    "fast-csv": "^4.2.0",
+    "faker": "^4.1.0",
     "jest-enzyme": "^7.1.2",
     "jest-google-maps-mock": "^1.0.3",
     "mini-css-extract-plugin": "^0.9.0",
