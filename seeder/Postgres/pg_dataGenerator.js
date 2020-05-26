@@ -3,8 +3,8 @@ const path = require('path');
 const csvWriter = require('csv-write-stream');
 const fs = require('fs');
 
-const { images, coords } = require('../src/server/database/fakeData.js');
-const { tourHeaders, stopHeaders, attractionHeaders } = require('./Postgres/pg_headers.js');
+const { images, coords } = require('../../src/server/database/fakeData.js');
+const { tourHeaders, stopHeaders, attractionHeaders } = require('./pg_headers.js');
 
 const createTour = (index) => {
   const tour = {
@@ -96,3 +96,7 @@ const createData = async (constructor, headers, max, fileName) => {
 createData(createTour, tourHeaders, 10000000, 'tours.csv');
 createData(createAttraction, attractionHeaders, 10000000, 'attractions.csv');
 createStops(10000000, stopHeaders, 'stops.csv');
+
+module.exports = {
+  createData,
+};
