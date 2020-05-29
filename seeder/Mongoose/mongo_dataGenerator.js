@@ -1,33 +1,40 @@
-const { address, lorem, random, internet } = require('faker');
+const {
+  address, lorem, random, internet,
+} = require('faker');
+
 const path = require('path');
-const csvWriter = require('csv-write-stream');
 const fs = require('fs');
 
 const { coords, images } = require('../../src/server/database/fakeData.js');
 
-const tourHeaders = [
-  'tour_name',
-  'overview',
-  'cancellation_policy',
-  'return_details',
-  'startpoint_name',
-  'startpoint_street',
-  'startpoint_city',
-  'startpoint_state',
-  'startpoint_zip',
-  'startpoint_country',
-  'startpoint_details',
-  'endpoint_name',
-  'endpoint_street',
-  'endpoint_city',
-  'endpoint_state',
-  'endpoint_zip',
-  'endpoint_country',
-  'endpoint_details',
-];
+const createAttraction = (index) => {
+  const attraction = {
+    attraction_id: index,
+    attraction_name: lorem.words(),
+    latitude: Math.random() * (coords.north - coords.south) + coords.south,
+    longitude: Math.random() * (coords.east - coords.west) + coords.west,
+    rating: Number((Math.random(5 - 3) + 1).toFixed(1)),
+    review_count: Math.floor(Math.random() * (3000 - 1) + 1),
+    attraction_url: internet.url(),
+    image_path: images[random.number(images.length - 1)],
+    image_alt: lorem.words(),
+  };
+  return attraction;
+};
 
-const createTour = () => {
-  const tour = {
+const generateAttractions = (max) => {
+  const attractions = [];
+  for (let i = 1; i <= max; i += 1) {
+    attractions.push(createAttraction(i));
+  }
+  return attractions;
+};
+
+const attractions = generateAttractions(100);
+
+const createTour = (id) => (
+  {
+    _id: id,
     tour_name: `Tour around ${address.city()}`,
     overview: lorem.paragraph(),
     cancellation_policy: lorem.paragraph(),
@@ -46,48 +53,74 @@ const createTour = () => {
     endpoint_zip: address.zipCode(),
     endpoint_country: 'USA',
     endpoint_details: lorem.sentences(),
-    stops: [],
-  };
-  return tour;
-};
+  }
+);
 
-const createStop = (positionValue) => {
-  const stop = {
+const createStop = (id, positionValue) => (
+  {
+    stop_id: id,
     position: positionValue,
     duration: random.number({ min: 15, max: 180 }),
     admission_details: `Admission ${positionValue % 2 ? 'included' : 'excluded'}`,
     stop_description: lorem.paragraph(),
-    attraction_name: lorem.words(),
-    latitude: Math.random() * (coords.north - coords.south) + coords.south,
-    longitude: Math.random() * (coords.east - coords.west) + coords.west,
-    rating: (Math.random(5 - 3) + 1).toFixed(1),
-    review_count: Math.floor(Math.random() * (3000 - 1) + 1),
-    attraction_url: internet.url(),
-    image_path: images[random.number(images.length - 1)],
-    image_alt: lorem.words(),
-  };
-  return stop;
-};
+  }
+);
 
-const createData = async (max) => {
+
+const generateData = async (max) => {
+  let stopCount = 1;
+  let attractionIndex = 0;
   console.time('Write time');
-  const writer = csvWriter({ headers: tourHeaders });
-  writer.pipe(fs.createWriteStream(path.join(__dirname, 'mongo_fakeData', 'mongo_tours.csv')));
+  const tourWriter = fs.createWriteStream((path.join(__dirname, 'mongo_fakeData', 'mongo_tours.json')));
 
   for (let i = 1; i <= max; i += 1) {
-    const tour = createTour();
+    const tourId = i;
+    const tour = createTour(tourId);
+
     const stopsPerTour = random.number({ min: 1, max: 8 });
+    const stopsArray = [];
     for (let j = 1; j <= stopsPerTour; j += 1) {
-      const stop = createStop(j);
-      tour.stops.push(stop);
+      const stop = createStop(stopCount, j);
+      stop.attraction = attractions[attractionIndex];
+      attractionIndex = attractionIndex === 99 ? 0 : attractionIndex += 1;
+
+      stopsArray.push(stop);
+      tour.stops = stopsArray;
+      stopCount += 1;
     }
-    console.log(tour);
-    if (!writer.write(tour)) {
-      await new Promise((resolve) => writer.once('drain', resolve));
+    if (!tourWriter.write(JSON.stringify(tour))) {
+      await new Promise((resolve) => tourWriter.once('drain', resolve));
     }
   }
-  writer.end();
+  tourWriter.end();
+  console.log(`Finished writing ${max} tours and ${stopCount} stops`);
   console.timeEnd('Write time');
 };
 
-createData(1);
+generateData(100);
+
+module.exports = {
+  createStop,
+  createTour,
+};
+
+// const createData = async (max) => {
+//   console.time('Write time');
+//   const writer = csvWriter({ headers: tourHeaders });
+//   writer.pipe(fs.createWriteStream(path.join(__dirname, 'mongo_fakeData', 'mongo_tours.csv')));
+
+//   for (let i = 1; i <= max; i += 1) {
+//     const tour = createTour();
+//     const stopsPerTour = random.number({ min: 1, max: 8 });
+//     for (let j = 1; j <= stopsPerTour; j += 1) {
+//       const stop = createStop(j);
+//       tour.stops.push(stop);
+//     }
+//     console.log(tour);
+//     if (!writer.write(tour)) {
+//       await new Promise((resolve) => writer.once('drain', resolve));
+//     }
+//   }
+//   writer.end();
+//   console.timeEnd('Write time');
+// };
