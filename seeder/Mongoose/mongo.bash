@@ -1,10 +1,10 @@
 if [ $(mongo --eval 'db.getMongo().getDBNames().indexOf("tours")' --quiet) -lt 0 ]; then
-  echo "tours doesn't exist"
+  echo "snaketours doesn't exist"
   echo "creating new database..."
-  mongoimport --db tours --collection tours --file /Users/joeynguyen/tripadvisor-itenerary-server/seeder/Mongoose/mongo_tours.csv --type csv --headerline
+  time mongoimport --db snaketours --collection tours --file /Users/joeynguyen/tripadvisor-itenerary-server/seeder/Mongoose/mongo_fakeData/mongo_tours.json --type json
 else
-    echo "tours exists"
-    mongo tours --eval "db.dropDatabase()"
-    echo "database dropped"
-    mongoimport --db tours --collection tours --file /Users/joeynguyen/tripadvisor-itenerary-server/seeder/Mongoose/mongo_tours.csv --type csv --headerline
+  echo "snaketours exists"
+  mongo snaketours --eval "db.dropDatabase()"
+  echo "database dropped"
+  time mongoimport --db snaketours --collection tours --file /Users/joeynguyen/tripadvisor-itenerary-server/seeder/Mongoose/mongo_fakeData/mongo_tours.json --type json
 fi
