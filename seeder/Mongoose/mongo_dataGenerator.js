@@ -97,7 +97,7 @@ const generateData = async (max) => {
   console.timeEnd('Write time');
 };
 
-generateData(100);
+generateData(10000000);
 
 module.exports = {
   createStop,
