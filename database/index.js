@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/snaketours');
+const config = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+};
+mongoose.connect('mongodb://localhost/snaketours', config);
 
 const db = mongoose.connection;
 

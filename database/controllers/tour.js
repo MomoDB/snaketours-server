@@ -1,7 +1,8 @@
 const Tour = require('../models/tour.js');
+const db = require('../index.js');
 
 const getTour = (id, callback) => {
-  Tour.findByid(id, (err, tour) => {
+  Tour.findById(id, (err, tour) => {
     if (err) {
       callback(err);
     }
