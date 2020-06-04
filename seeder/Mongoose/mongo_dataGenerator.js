@@ -77,7 +77,7 @@ const generateData = async (max) => {
     const tourId = i;
     const tour = createTour(tourId);
 
-    const stopsPerTour = random.number({ min: 1, max: 8 });
+    const stopsPerTour = random.number({ min: 1, max: 3 });
     const stopsArray = [];
     for (let j = 1; j <= stopsPerTour; j += 1) {
       const stop = createStop(stopCount, j);
