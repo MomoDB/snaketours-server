@@ -1,42 +1,41 @@
-let http = require('http');
-const app = require('./routes');
-const models = require('./database/models/index');
-const seed = require('./database/seeddatabase');
-const controller = require('./database/controller');
+const newrelic = require('newrelic');
+const express = require('express');
+const path = require('path');
+const { getTour, addTour } = require('../../database/controllers/tour.js');
 
-http = http.Server(app);
+const app = express();
+const port = 3000;
 
-const sequelizeOptions = { force: true, logging: false };
-
-// If force is true (and it is), Sequelize will drop all
-// tables and re-add whatever is in models when the server starts.
-// This is nifty for y'all to be able to make changes to the DB
-// and not have to constantly do some pruning.
-//  This option should be eventually put to 'false'!
-
-const port = process.env.PORT || 3000;
-
-app.set('sqlport', process.env.SQLPORT || 5432);
-
-app.listen(port, () => {
-  console.log(`Express server listening on port ${port}`);
+app.use(express.static(path.join(__dirname, '..', '..', 'dist')));
+app.use('/image/', express.static(path.join(__dirname, '..', 'public', 'img')));
+app.use(express.json());
+app.use((req, res, next) => {
+  console.log(`Incoming ${req.method} request for ${req.path}`);
+  next();
 });
 
-models.sequelize.sync(sequelizeOptions).then(() => {
-  const server = http.listen(app.get('sqlport'), () => {
-    console.log(`SQL server on ${server.address().port}`);
+app.get('/tour/:id', (req, res) => {
+  getTour(req.params.id, (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send(err);
+    }
+    res.status(200).send(data);
+  });
+});
 
-    models.Tour.count()
-      .then((results) => {
-        if (results < 100) {
-          seed(models);
-        } else {
-          console.log('\x1b[32m%s\x1b[0m', `${results} rows found in Tours table: database seed script will not run.`);
-        }
-      })
-      .catch((error) => console.error(error));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', '..', 'index.html'));
+});
+
+app.post('/tour/', (req, res) => {
+  addTour(req.body, (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(501).send(err);
+    }
+    res.status(201).send(data);
   });
-})
-  .catch((error) => {
-    console.error(error);
-  });
+});
+
+app.listen(port, () => console.log(`Express server listening on port ${port}`));

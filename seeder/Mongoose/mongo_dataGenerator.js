@@ -103,24 +103,3 @@ module.exports = {
   createStop,
   createTour,
 };
-
-// const createData = async (max) => {
-//   console.time('Write time');
-//   const writer = csvWriter({ headers: tourHeaders });
-//   writer.pipe(fs.createWriteStream(path.join(__dirname, 'mongo_fakeData', 'mongo_tours.csv')));
-
-//   for (let i = 1; i <= max; i += 1) {
-//     const tour = createTour();
-//     const stopsPerTour = random.number({ min: 1, max: 8 });
-//     for (let j = 1; j <= stopsPerTour; j += 1) {
-//       const stop = createStop(j);
-//       tour.stops.push(stop);
-//     }
-//     console.log(tour);
-//     if (!writer.write(tour)) {
-//       await new Promise((resolve) => writer.once('drain', resolve));
-//     }
-//   }
-//   writer.end();
-//   console.timeEnd('Write time');
-// };

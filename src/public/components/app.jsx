@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import { Link, animateScroll as scroll } from 'react-scroll';
+import axios from 'axios';
 import GlobalStyles from '../css/globalstyles';
 import AttractionList from './AttractionList';
-import { Link, animateScroll as scroll } from 'react-scroll';
 import GoogleMap from './GoogleMap';
 import tour from '../../dummydata';
-import { Backdrop, Panel, List, LayoutRow, LayoutColumn, DisplayHeading } from '../css/layout';
-import axios from 'axios';
+import {
+  Backdrop, Panel, List, LayoutRow, LayoutColumn, DisplayHeading,
+} from '../css/layout';
 
 class App extends Component {
   constructor(props) {
@@ -26,8 +28,11 @@ class App extends Component {
   }
 
   loadTour() {
-    axios.get('tour')
+    const randomId = Math.floor(Math.random() * (Math.floor(10000000) - Math.ceil(1) + 1)) + 1;
+    axios.get(`/tour/${randomId}`)
       .then((response) => {
+        console.log(response.data);
+        // TODO: Fix app to use new data shape
         this.setState({ tour: response.data });
         this.setState({ isLoaded: true });
       });
