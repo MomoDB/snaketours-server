@@ -1,7 +1,7 @@
 const newrelic = require('newrelic');
 const express = require('express');
 const path = require('path');
-const { getTour, addTour } = require('../../database/controllers/tour.js');
+const { getTour, addTour } = require('./database/controllers/tour.js');
 
 const app = express();
 const port = 3000;
