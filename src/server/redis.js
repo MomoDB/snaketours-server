@@ -1,6 +1,6 @@
 const redis = require('redis');
 
-const portRedis = 6379;
+const portRedis = 'redis://snaketours-cache.glmwdm.ng.0001.usw1.cache.amazonaws.com:6379';
 
 const redisClient = redis.createClient(portRedis);
 
