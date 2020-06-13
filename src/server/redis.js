@@ -18,11 +18,10 @@ const checkCache = (req, res, next) => {
   // get data value for key =id
   redisClient.get(id, (err, data) => {
     if (err) {
-      console.error(err);
       res.status(500).send(err);
     }
     // if match found
-    if (data != null) {
+    if (data) {
       res.set('Content-Type', 'application/json; charset=utf-8');
       res.status(200).send(data);
     } else {
@@ -31,7 +30,6 @@ const checkCache = (req, res, next) => {
     }
   });
 };
-
 
 module.exports = {
   redisClient,
