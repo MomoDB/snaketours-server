@@ -1,6 +1,7 @@
 const newrelic = require('newrelic');
 const express = require('express');
 const path = require('path');
+const { checkCache } = require('./redis.js');
 const { getTour, addTour } = require('./database/controllers/tour.js');
 
 const app = express();
@@ -14,7 +15,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/tour/:id', (req, res) => {
+app.get('/tour/:id', checkCache, (req, res) => {
   getTour(req.params.id, (err, data) => {
     if (err) {
       console.error(err);
