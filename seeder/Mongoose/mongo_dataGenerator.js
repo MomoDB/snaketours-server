@@ -5,7 +5,7 @@ const {
 const path = require('path');
 const fs = require('fs');
 
-const { coords, images } = require('../../src/server/database/fakeData.js');
+const { coords, images } = require('../fakeData.js');
 
 const createAttraction = (index) => {
   const attraction = {
