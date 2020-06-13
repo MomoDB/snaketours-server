@@ -10,10 +10,6 @@ const port = 3000;
 app.use(express.static(path.join(__dirname, '..', '..', 'dist')));
 app.use('/image/', express.static(path.join(__dirname, '..', 'public', 'img')));
 app.use(express.json());
-app.use((req, res, next) => {
-  console.log(`Incoming ${req.method} request for ${req.path}`);
-  next();
-});
 
 app.get('/tour/:id', checkCache, (req, res) => {
   getTour(req.params.id, (err, data) => {

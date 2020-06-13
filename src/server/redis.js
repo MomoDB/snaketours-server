@@ -23,7 +23,6 @@ const checkCache = (req, res, next) => {
     }
     // if match found
     if (data != null) {
-      console.log('Sent from redis');
       res.set('Content-Type', 'application/json; charset=utf-8');
       res.status(200).send(data);
     } else {
