@@ -10,5 +10,3 @@ mongo_fakeData
 pg.bash
 old_database
 newrelic_agent.log
-docker-compose.yml
-Dockerfile
